@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Commerce App</title>
+  <link rel="stylesheet" href="/src/style.css">
+  <!-- Google Fonts: Roboto -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <!-- Mixpanel Snippet -->
+  <script type="text/javascript">
+    (function (f, b) { if (!b.__SV) { var e, g, i, h; window.mixpanel = b; b._i = []; b.init = function (e, f, c) { function g(a, d) { var b = d.split("."); 2 == b.length && ((a = a[b[0]]), (d = b[1])); a[d] = function () { a.push([d].concat(Array.prototype.slice.call(arguments, 0))); }; } var a = b; "undefined" !== typeof c ? (a = b[c] = []) : (c = "mixpanel"); a.people = a.people || []; a.toString = function (a) { var d = "mixpanel"; "mixpanel" !== c && (d += "." + c); a || (d += " (stub)"); return d; }; a.people.toString = function () { return a.toString(1) + ".people (stub)"; }; i = "disable time_event track track_pageview track_links track_forms track_with_groups add_group set_group remove_group register register_once alias unregister identify name_tag set_config reset opt_in_tracking opt_out_tracking has_opted_in_tracking has_opted_out_tracking clear_opt_in_out_tracking start_batch_senders people.set people.set_once people.unset people.increment people.append people.union people.track_charge people.clear_charges people.delete_user people.remove".split(" "); for (h = 0; h < i.length; h++) g(a, i[h]); var j = "set set_once union unset remove delete".split(" "); a.get_group = function () { function b(c) { d[c] = function () { call2_args = arguments; call2 = [c].concat(Array.prototype.slice.call(call2_args, 0)); a.push([e, call2]); }; } for (var d = {}, e = ["get_group"].concat(Array.prototype.slice.call(arguments, 0)), c = 0; c < j.length; c++) b(j[c]); return d; }; b._i.push([e, f, c]); }; b.__SV = 1.2; e = f.createElement("script"); e.type = "text/javascript"; e.async = true; e.src = "undefined" !== typeof MIXPANEL_CUSTOM_LIB_URL ? MIXPANEL_CUSTOM_LIB_URL : "file:" === f.location.protocol && "//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//) ? "https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js" : "//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js"; g = f.getElementsByTagName("script")[0]; g.parentNode.insertBefore(e, g); } })(document, window.mixpanel || []);
+  </script>
+</head>
+<body>
+  <div id="app">
+    <!-- User Navbar (hidden initially) -->
+    <nav id="user-navbar" class="navbar hidden">
+      <div class="container">
+        <h1 class="logo">E-Commerce</h1>
+        <div class="nav-links">
+          <button id="products-btn" class="nav-btn">Products</button>
+          <button id="cart-btn" class="nav-btn">Cart</button>
+          <button id="order-history-btn" class="nav-btn">History</button>
+          <button id="logout-btn" class="nav-btn">Logout</button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Admin Navbar (hidden initially) -->
+    <nav id="admin-navbar" class="navbar hidden">
+      <div class="container">
+        <h1 class="logo">E-Commerce (Admin)</h1>
+        <div class="nav-links">
+          <button id="admin-products-btn" class="nav-btn">Manage Products</button>
+          <button id="admin-show-products-btn" class="nav-btn">Show Products</button>
+          <button id="admin-logout-btn" class="nav-btn">Logout</button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Signup Section (visible initially) -->
+    <section id="signup-section" class="section">
+      <div class="container">
+        <h2>Sign Up</h2>
+        <div class="form-container">
+          <div id="signup-error" class="error hidden"></div>
+          <div class="form-group">
+            <label for="signup-email">Email</label>
+            <input id="signup-email" type="email" required>
+          </div>
+          <div class="form-group">
+            <label for="signup-password">Password</label>
+            <input id="signup-password" type="password" required>
+          </div>
+          <button id="signup-submit" class="btn">Sign Up</button>
+          <p>
+            Already have an account? <a id="show-login" href="#" class="link">Login</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Login Section (hidden initially) -->
+    <section id="login-section" class="section hidden">
+      <div class="container">
+        <h2>Login</h2>
+        <div class="form-container">
+          <div id="login-error" class="error hidden"></div>
+          <div class="form-group">
+            <label for="login-email">Email</label>
+            <input id="login-email" type="email" required>
+          </div>
+          <div class="form-group">
+            <label for="login-password">Password</label>
+            <input id="login-password" type="password" required>
+          </div>
+          <button id="login-submit" class="btn">Login</button>
+          <p>
+            Don't have an account? <a id="show-signup" href="#" class="link">Sign Up</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Products Section (hidden initially) -->
+    <section id="products-section" class="section hidden">
+      <div class="container">
+        <h2>Products</h2>
+        <div id="products-list" class="grid"></div>
+        <div class="pagination">
+          <button id="products-prev" class="btn">Previous</button>
+          <span id="products-page-info"></span>
+          <button id="products-next" class="btn">Next</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cart Section (hidden initially) -->
+    <section id="cart-section" class="section hidden">
+      <div class="container">
+        <h2>Cart</h2>
+        <div id="cart-list" class="cart-list"></div>
+      </div>
+    </section>
+
+    <!-- Order History Section (hidden initially) -->
+    <section id="order-history-section" class="section hidden">
+      <div class="container">
+        <h2>Order History</h2>
+        <div id="order-history-list" class="cart-list"></div>
+        <div class="pagination">
+          <button id="order-history-prev" class="btn">Previous</button>
+          <span id="order-history-page-info"></span>
+          <button id="order-history-next" class="btn">Next</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Admin Manage Products Section (hidden initially) -->
+    <section id="admin-products-section" class="section hidden">
+      <div class="container">
+        <h2>Manage Products</h2>
+        <div class="form-container">
+          <h3>Add Product</h3>
+          <div id="admin-add-error" class="error hidden"></div>
+          <div class="form-group">
+            <label for="admin-product-name">Name</label>
+            <input id="admin-product-name" type="text" required>
+          </div>
+          <div class="form-group">
+            <label for="admin-product-quantity">Quantity</label>
+            <input id="admin-product-quantity" type="number" required>
+          </div>
+          <div class="form-group">
+            <label for="admin-product-price">Price</label>
+            <input id="admin-product-price" type="text" required>
+          </div>
+          <button id="admin-add-product" class="btn">Add Product</button>
+        </div>
+        <div class="form-container edit-form hidden">
+          <h3>Edit Product</h3>
+          <div id="admin-edit-error" class="error hidden"></div>
+          <div class="form-group">
+            <label for="admin-edit-product-id">Product ID</label>
+            <input id="admin-edit-product-id" type="text" readonly>
+          </div>
+          <div class="form-group">
+            <label for="admin-edit-product-name">Name</label>
+            <input id="admin-edit-product-name" type="text" required>
+          </div>
+          <div class="form-group">
+            <label for="admin-edit-product-quantity">Quantity</label>
+            <input id="admin-edit-product-quantity" type="number" required>
+          </div>
+          <div class="form-group">
+            <label for="admin-edit-product-price">Price</label>
+            <input id="admin-edit-product-price" type="text" required>
+          </div>
+          <button id="admin-edit-product" class="btn">Edit Product</button>
+          <button id="admin-cancel-edit" class="btn delete">Cancel</button>
+        </div>
+        <h3>Products List</h3>
+        <div id="admin-products-list" class="grid"></div>
+      </div>
+    </section>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

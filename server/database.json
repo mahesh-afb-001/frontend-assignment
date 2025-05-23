@@ -1,0 +1,11 @@
+{
+  "defaultEnv": "development",
+  "development": {
+    "driver": "pg",
+    "host": "localhost",
+    "port": 5433,
+    "database": "mydb",
+    "user": "postgres",
+    "password": "mahesh"
+  }
+}
